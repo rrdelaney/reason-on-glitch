@@ -1,0 +1,24 @@
+// There's a lot of mess in this file specific to Glitch
+// Don't use this exactly if running locally
+{
+  "name": "reason-scripts",
+  "sources": [
+    "src",
+    "node_modules/bs-express/src",
+    "node_modules/reason-react/src"
+  ],
+  "reason": {
+    "react-jsx": 2
+  },
+  "bsc-flags": [
+    "-bs-super-errors"
+  ],
+  "refmt": 3,
+  "use-stdlib": false,
+  "bs-external-includes": ["/app/node_modules/bs-platform/lib/ocaml"],
+  "package-specs": {
+    "module": "commonjs",
+    "in-source": true
+  },
+  "suffix": ".bs.js",
+}
