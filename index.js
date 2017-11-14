@@ -13,6 +13,10 @@ const path = require('path')
 const {promisify} = require('util')
 const bsb = require('bsb-js')
 const browserify = require('browserify')
+const stripAnsi = require('strip-ansi')
+const Converter = require('ansi-to-html')
+
+const convert = new Converter()
 
 const writeFile = promisify(fs.writeFile)
 
@@ -31,17 +35,15 @@ const writeFile = promisify(fs.writeFile)
     require('./src/server.bs')
   } catch (e) {
     // Capture any errors that might happen, replace ANSI colors from the output
-    const bsbError = typeof e === 'string'
-      ? e.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')
-      : e.stack
+    const bsbError = typeof e === 'string' ? e : e.stack
 
     // Also log the error
-    console.error(bsbError)
+    console.error(stripAnsi(bsbError))
 
     // If there was an error start a server to display it
     require('express')()
       .get('/', (req, res) => {
-        res.status(500).send(`<html><pre style="color:red">${bsbError}</pre></html>`)
+        res.status(500).send(`<html><body style="background-color: #65737E"><pre>${convert.toHtml(bsbError)}</pre></body></html>`)
       })
       .listen(process.env.PORT, () => {
         console.log('Booted with errors o_o')

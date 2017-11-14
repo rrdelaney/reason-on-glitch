@@ -4,8 +4,10 @@
   "name": "reason-scripts",
   "sources": [
     "src",
+    "bindings",
     "node_modules/bs-express/src",
-    "node_modules/reason-react/src"
+    "node_modules/reason-react/src",
+    "node_modules/bs-json/src"
   ],
   "reason": {
     "react-jsx": 2

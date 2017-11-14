@@ -1,6 +1,14 @@
+open DataModel;
+
 let component = ReasonReact.statelessComponent("ReactApp");
 
-let make = (~name, _children) => {
+let make = (~data: root, _children) => {
   ...component,
-  render: (self) => <p> {ReasonReact.stringToElement("Hello " ++ name ++ "!")} </p>
+  render: (_self) => <div>
+    <ul>
+      {Array.map(todo => {
+        <li>{ReasonReact.stringToElement(todo.name)}</li>
+      }, data.todos) |> ReasonReact.arrayToElement}
+    </ul>
+  </div>
 };

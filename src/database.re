@@ -1,8 +1,12 @@
-type data = Js.t({. name: string });
+open DataModel;
 
-let read = () => {"name": "ReasonML"};
+let read = () => {
+  todos: [|
+    {name: "One"}
+  |]
+};
 
-let database: ref(option(data)) = ref(None);
+let database: ref(option(DataModel.root)) = ref(None);
 
 let rec fetch = () => {
   switch (database^) {
